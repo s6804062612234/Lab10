@@ -1,26 +1,42 @@
-#include <stdio.h> 
-#include <stdlib.h> 
-struct Books{ 
-    int BookID; 
-    char BookTitle[50]; 
-} ComputerBook; 
-void DisplayData(struct Books *CBook); 
+#include <stdio.h>
+#include <string.h>
+typedef struct {
+	char loginname[64];
+	char password[64];
+} account ;
 
-int main() { 
-    printf("Enter Book ID :");      
-    scanf("%d",&ComputerBook.BookID); 
-    printf("Enter Book Title :");   
-    scanf("%s",ComputerBook.BookTitle); 
-    DisplayData(&ComputerBook);    // ส่งตำแหน่งที่อยู่ข้อมูลไปยังฟังก์ชัน DisplayData 
-    return 0; 
-} 
-void DisplayData(struct Books *CBook){ 
-    printf("Book ID : %d \n",(*CBook).BookID); 
-    printf("Book Title : %s \n",CBook->BookTitle); 
-} 
+typedef struct {
+	char stdID[16];
+	char nameSurname[25];
+	account stdACC;
+} hoststd;
+
+hoststd cs[5] = {
+				{"66-040626-2686-9", "MR.A", {"user1", "passwd1"}},
+				{"66-040626-2687-0", "MR.B", {"user2", "passwd2"}},
+				{"66-040626-2687-1", "MR.C", {"user3", "passwd3"}},
+				{"66-040626-2687-2", "MR.D", {"user4", "passwd4"}},
+				{"66-040626-2687-3", "MR.E", {"user5", "passwd5"}}
+			};
 
 
+int checkLogin(char *login, char *passwd, hoststd std[]) {
+    int i;
+    for(i=0; i<5; i++) {
+        if(!strcmp(login, std[i].stdACC.loginname) && !strcmp(passwd, std[i].stdACC.password))
+            return 1;
+    }
+    return 0;
+}
 
-// ทดสอบรันโปรแกรมและเขียนผลลัพท์พร้อมอธิบายโปรแกรม
-// (*CBook).BookID คือ ไปที่ Address ของค่าที่รับเข้ามาแล้วไปที่ field BookID
-// CBook->BookTitle คือ เหมือนกับ (*CBook).BookID แค่เป็นวิธีที่ทำให้อ่านง่ายขึ้น
+int main() {
+	char login[64];
+	char password[64];
+    printf("Enter login : "); gets(login);
+    printf("Enter password : "); gets(password);
+    if( checkLogin(login, password, cs) == 1) {
+        printf("Welcome\n");
+    } else {
+        printf("Incorrect login or password\n");
+    }
+}
