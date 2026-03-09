@@ -3,23 +3,24 @@
 struct Books{ 
     int BookID; 
     char BookTitle[50]; 
-    } ComputerBook; 
-void DisplayData(struct Books CBook); 
+} ComputerBook; 
+void DisplayData(struct Books *CBook); 
 
 int main() { 
     printf("Enter Book ID :");      
     scanf("%d",&ComputerBook.BookID); 
     printf("Enter Book Title :");   
     scanf("%s",ComputerBook.BookTitle); 
-    DisplayData(ComputerBook); // ส่งข้อมูลไปยังฟังก์ชัน DisplayData 
+    DisplayData(&ComputerBook);    // ส่งตำแหน่งที่อยู่ข้อมูลไปยังฟังก์ชัน DisplayData 
     return 0; 
 } 
-    void DisplayData(struct Books CBook){ 
-    printf("Book ID : %d \n",CBook.BookID); 
-    printf("Book Title : %s \n",CBook.BookTitle); 
+void DisplayData(struct Books *CBook){ 
+    printf("Book ID : %d \n",(*CBook).BookID); 
+    printf("Book Title : %s \n",CBook->BookTitle); 
 } 
+
 
 
 // ทดสอบรันโปรแกรมและเขียนผลลัพท์พร้อมอธิบายโปรแกรม
-// void DisplayData(struct Books CBook) คือ ฟังก์ชันที่จะปริ้น BookID กับ BookTitle ของ ComputerBook
-// พารามิเตอร์ที่รับเข้ามา รับค่า ComputerBook
+// (*CBook).BookID คือ ไปที่ Address ของค่าที่รับเข้ามาแล้วไปที่ field BookID
+// CBook->BookTitle คือ เหมือนกับ (*CBook).BookID แค่เป็นวิธีที่ทำให้อ่านง่ายขึ้น
